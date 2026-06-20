@@ -1,0 +1,39 @@
+{
+  "images": [
+    {
+      "dest": "images/destinations/keys.jpg",
+      "page": "https://unsplash.com/photos/Nlb4bIOgFpo",
+      "credit": "Lance Asper / Unsplash"
+    },
+    {
+      "dest": "images/destinations/smokies-waterfall.jpg",
+      "page": "https://unsplash.com/photos/4AYAC8E8eKY",
+      "credit": "Chad Madden / Unsplash"
+    },
+    {
+      "dest": "images/destinations/western-badlands.jpg",
+      "page": "https://pixabay.com/photos/badlands-national-park-south-dakota-4330786/",
+      "credit": "Pixabay user / Pixabay"
+    },
+    {
+      "dest": "images/packages/keys-5-day.jpg",
+      "page": "https://www.pexels.com/photo/1442442/",
+      "credit": "Lance Asper / Pexels"
+    },
+    {
+      "dest": "images/packages/smokies-4-day.jpg",
+      "page": "https://www.pexels.com/photo/4171739/",
+      "credit": "Asad Photo Maldives / Pexels"
+    },
+    {
+      "dest": "images/packages/western-8-day.jpg",
+      "page": "https://unsplash.com/photos/7bwQXzbF6KE",
+      "credit": "Dino Reichmuth / Unsplash"
+    },
+    {
+      "dest": "images/about/team.jpg",
+      "page": "https://www.pexels.com/photo/1231230/",
+      "credit": "Fox / Pexels"
+    }
+  ]
+}
