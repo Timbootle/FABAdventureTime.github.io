@@ -7,7 +7,6 @@ from urllib.request import urlopen, urlretrieve, Request
 from urllib.error import URLError, HTTPError
 import subprocess
 
-
 def extract_og_image(html):
     # Try to find og:image or twitter:image meta tags
     m = re.search(r'property=["\']og:image["\']\s+content=["\']([^"\']+)["\']', html, re.IGNORECASE)
@@ -22,7 +21,6 @@ def extract_og_image(html):
         return m.group(1)
     return None
 
-
 def download_and_optimize(page_url, dest_path):
     print(f"Processing: {page_url} -> {dest_path}")
     headers = { 'User-Agent': 'github-actions-image-fetcher/1.0' }
@@ -36,7 +34,7 @@ def download_and_optimize(page_url, dest_path):
 
     img_url = extract_og_image(html)
     if not img_url:
-        # Try finding largest img src on the page as fallback
+        # Try finding first img src on the page as fallback
         m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', html)
         if m:
             img_url = m.group(1)
@@ -69,7 +67,6 @@ def download_and_optimize(page_url, dest_path):
 
     print(f"Saved optimized image to {dest_path}")
     return True
-
 
 def main():
     if len(sys.argv) < 2:
