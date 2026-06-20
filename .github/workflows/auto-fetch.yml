@@ -12,35 +12,38 @@ jobs:
   fetch_images:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false   # we'll set credentials with token below
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+      - name: Clone repository using token
+        env:
+          REPO_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+          GITHUB_REF: ${{ github.ref }}
+        run: |
+          set -e
+          BRANCH=${GITHUB_REF#refs/heads/}
+          # default to main if GITHUB_REF not set (schedule runs)
+          if [ -z "$BRANCH" ]; then BRANCH=main; fi
+          echo "Cloning branch $BRANCH"
+          git clone --depth=1 --branch "$BRANCH" https://x-access-token:${REPO_TOKEN}@github.com/${{ github.repository }} repo || git clone https://x-access-token:${REPO_TOKEN}@github.com/${{ github.repository }} repo
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y imagemagick wget
+          sudo apt-get install -y imagemagick wget python3 python3-venv python3-pip git
 
       - name: Run image fetch script
-        env:
-          GITHUB_WORKSPACE: ${{ github.workspace }}
         run: |
+          set -e
+          cd repo
           python3 scripts/fetch_images.py images/sources.json
 
       - name: Commit and push images using token
         env:
           REPO_TOKEN: ${{ secrets.COPILOT_TOKEN }}
         run: |
+          set -e
+          cd repo
           git config user.name "automation-bot"
           git config user.email "automation-bot@users.noreply.github.com"
           git add images/
           git commit -m "Automated: add/refresh optimized images" || echo "No changes to commit"
-          # Use token for push to avoid relying on the default GITHUB_TOKEN
           git remote set-url origin https://x-access-token:${REPO_TOKEN}@github.com/${{ github.repository }}
           git push origin HEAD:main
